@@ -1,0 +1,51 @@
+1.
+> db.mycollection.find( { "state" : "NY" } ).count()
+1595
+
+2.
+> db.mycollection.find({"pop":{$ne:0}},{_id:1}).sort({"pop":1}).limit(5)
+{ "_id" : "11042" }
+{ "_id" : "21240" }
+{ "_id" : "26818" }
+{ "_id" : "32815" }
+{ "_id" : "76824" }
+
+3.
+> db.mycollection.find({"city":"BROOKLYN"},{_id:1,pop:1}).limit(3)
+{ "_id" : "06234", "pop" : 4835 }
+{ "_id" : "11201", "pop" : 46980 }
+{ "_id" : "11203", "pop" : 80566 }
+
+4.
+> db.mycollection.find({"state": {$nin: ["HI","AK", "PR"]}}).count()
+29078
+
+5.
+> db.mycollection.find({"state": {$in: ["NY", "NJ", "PA"]}}).count()
+3593
+
+6.  Returns the cities and populations in Washington where the the population is over 500 but under 600
+> db.mycollection.find({"pop": { $gte: 500, $lte: 600}, "state": "WA"}, {"loc":0,"_id":0,"state":0})
+{ "city" : "ANDERSON ISLAND", "pop" : 548 }
+{ "city" : "TACOMA", "pop" : 508 }
+{ "city" : "MOCLIPS", "pop" : 574 }
+{ "city" : "QUINAULT", "pop" : 545 }
+{ "city" : "VADER", "pop" : 523 }
+{ "city" : "GLENWOOD", "pop" : 549 }
+{ "city" : "TOUTLE", "pop" : 599 }
+{ "city" : "CRESTON", "pop" : 527 }
+{ "city" : "FRUITLAND", "pop" : 515 }
+{ "city" : "USK", "pop" : 501 }
+{ "city" : "CUNNINGHAM", "pop" : 511 }
+
+
+7.  Lists the zipcodes in the city of Albany in NY
+> db.mycollection.find({$and:[{"city":"ALBANY"},{"state":"NY"}]},{"_id":1})
+{ "_id" : "12202" }
+{ "_id" : "12204" }
+{ "_id" : "12206" }
+{ "_id" : "12207" }
+{ "_id" : "12209" }
+{ "_id" : "12208" }
+{ "_id" : "12210" }
+

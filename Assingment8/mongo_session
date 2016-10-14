@@ -1,0 +1,47 @@
+Last login: Sun May  1 09:22:44 on ttys001
+Graces-MacBook-Air:~ gracematuszyk$ ssh -l gem306 i6.cims.nyu.edu
+gem306@i6.cims.nyu.edu's password: 
+Last login: Sun May  1 09:22:49 2016 from cpe-24-193-88-241.nyc.res.rr.com
+You are using 0% of your 1.0G quota for /home/gem306.
+gem306@i6[~]$ module load mongodb-3.2.0
+gem306@i6[~]$ mongo gem306 --host class-mongodb.cims.nyu.edu -u gem306 -p
+MongoDB shell version: 3.2.0
+Enter password: 
+connecting to: class-mongodb.cims.nyu.edu:27017/gem306
+> db.mycollection.find( { "state" : "NY" } ).count()
+1595
+> db.mycollection.find({"pop":{$ne:0}},{_id:1}).sort({"pop":1}).limit(5)
+{ "_id" : "11042" }
+{ "_id" : "21240" }
+{ "_id" : "26818" }
+{ "_id" : "32815" }
+{ "_id" : "76824" }
+> db.mycollection.find({"city":"BROOKLYN"},{_id:1,pop:1}).limit(3)
+{ "_id" : "06234", "pop" : 4835 }
+{ "_id" : "11201", "pop" : 46980 }
+{ "_id" : "11203", "pop" : 80566 }
+> db.mycollection.find({"state": {$nin: ["HI","AK", "PR"]}}).count()
+29078
+> db.mycollection.find({"state": {$in: ["NY", "NJ", "PA"]}}).count()
+3593
+> db.mycollection.find({"pop": { $gte: 500, $lte: 600}, "state": "WA"}, {"loc":0,"_id":0,"state":0})
+{ "city" : "ANDERSON ISLAND", "pop" : 548 }
+{ "city" : "TACOMA", "pop" : 508 }
+{ "city" : "MOCLIPS", "pop" : 574 }
+{ "city" : "QUINAULT", "pop" : 545 }
+{ "city" : "VADER", "pop" : 523 }
+{ "city" : "GLENWOOD", "pop" : 549 }
+{ "city" : "TOUTLE", "pop" : 599 }
+{ "city" : "CRESTON", "pop" : 527 }
+{ "city" : "FRUITLAND", "pop" : 515 }
+{ "city" : "USK", "pop" : 501 }
+{ "city" : "CUNNINGHAM", "pop" : 511 }
+> db.mycollection.find({$and:[{"city":"ALBANY"},{"state":"NY"}]},{"_id":1})
+{ "_id" : "12202" }
+{ "_id" : "12204" }
+{ "_id" : "12206" }
+{ "_id" : "12207" }
+{ "_id" : "12209" }
+{ "_id" : "12208" }
+{ "_id" : "12210" }
+> 
